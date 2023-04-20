@@ -1,18 +1,37 @@
 // import logo from './logo.svg';
 import './App.css';
 import React, { useEffect, useState } from 'react';
-// import InputBox from './InputBox';
+import Input from './components/Input';
 // import Chat from './Chat';
 
 export default function App() {
 
   const [drone, setDrone] = useState(null);
+  const [memberList, setMemberList] = useState([]);
   const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
+
+  // Generate random name for member
+  const randomName = () => {
+    const adjectives = ["attractive", "bald", "beautiful", "chubby", "clean", "dazzling", "drab", "elegant", "fancy", "fit", "flabby", "glamorous", "gorgeous", "handsome", "long", "magnificent", "muscular", "plain", "plump", "quaint", "scruffy", "shapely", "short", "skinny", "stocky", "flying", "big", "tall"];
+    const nouns = ["marten", "mandrill", "tapir", "dromedary", "crab", "tiger", "canary", "chimpanzee", "civet", "dormouse", "chipmunk", "cougar", "parrot", "bighorn", "ox", "coati", "monkey", "raccoon", "dog", "kangaroo"];
+    const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+    const noun = nouns[Math.floor(Math.random() * nouns.length)];
+    return adjective + ' ' + noun;
+  };
+
+  // Generate random color for member
+  const randomColor = () => {
+    return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
+  };
 
   // Connect to Scaledrone channel
   useEffect(() => {
-    const drone = new window.Scaledrone('TLgwQzN5ZDSTtXDV');
+    const drone = new window.Scaledrone('TLgwQzN5ZDSTtXDV', {
+      data: { // Append user data because of observable room
+        name: randomName(),
+        color: randomColor()
+      }
+    });
     setDrone(drone);
   }, []);
 
@@ -50,47 +69,51 @@ export default function App() {
           console.log('Connected to room');
         }
       });
+      // Give an array of members when user joins room, one-time
+      room.on('members', members => {
+        setMemberList(members);
+        // console.log('Show Member list on members one time: ', members);
+      });
+      // Read custom member data
+      room.on('member_join', member => {
+        setMemberList(members => [...members, member]);
+        // console.log(member.clientData.name);
+        // console.log(member.clientData.color);
+        // console.log('Show Member list on member_join: ', member);
+      });
       // Save received messages
       room.on('message', message => {
-        setMessages([...messages, message]);
-        console.log('Received data:', message.data);
-        console.log('Messages:', messages);
+        setMessages(messages => [...messages, message]);
+        // console.log('Received data:', message.data);
+        // console.log('Messages:', messages);
       });
     };
 
     if (drone) droneEvents();
-  }, [drone, messages]);
+  }, [drone, messages, memberList]);
 
-  const sendMessage = (input) => {
-    drone.publish({
-      room: 'observable-room',
-      message: input
-    });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setInput(event.target.value);
-    sendMessage(input);
+  // Convert timestamp into readable hours and minutes
+  const convertTimestamp = (timestamp) => {
+    const date = new Date(timestamp * 1000); // Convert from seconds to miliseconds
+    const convertedTime = new Intl.DateTimeFormat('hr-HR', {
+      hour: 'numeric',
+      minute: 'numeric'
+    }).format(date);
+    return convertedTime;
   };
 
   return (
     <div className="App">
       <h1>Welcome to the Chat Room!</h1>
-      <h3>Click the "Join" button to enter the Chat Room</h3>
-      <button>Join</button>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={input}
-          placeholder="Input your message and click SEND"
-          onChange={event => setInput(event.target.value)}
-        />
-        <button type="submit">Send</button>
-      </form>
       {
-        messages.map(message => <h5 key={message.id}>{message.data}</h5>)
+        messages.map(message => <h5 key={message.id}>{convertTimestamp(message.timestamp)} | {message.member.clientData.name}: {message.data}</h5>)
       }
+      <Input
+        sendMessage={(messageObject) => drone.publish(messageObject)}
+      />
+
+      {console.log('Show Member list: ', memberList)}
+      {console.log('Show Messages: ', messages)}
     </div>
   );
 }
