@@ -2,7 +2,7 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import Input from './components/Input';
-// import Chat from './Chat';
+import Chat from './components/Chat';
 
 export default function App() {
 
@@ -92,24 +92,15 @@ export default function App() {
     if (drone) droneEvents();
   }, [drone, messages, memberList]);
 
-  // Convert timestamp into readable hours and minutes
-  const convertTimestamp = (timestamp) => {
-    const date = new Date(timestamp * 1000); // Convert from seconds to miliseconds
-    const convertedTime = new Intl.DateTimeFormat('hr-HR', {
-      hour: 'numeric',
-      minute: 'numeric'
-    }).format(date);
-    return convertedTime;
-  };
-
   return (
     <div className="App">
       <h1>Welcome to the Chat Room!</h1>
-      {
-        messages.map(message => <h5 key={message.id}>{convertTimestamp(message.timestamp)} | {message.member.clientData.name}: {message.data}</h5>)
-      }
+
+      <Chat
+        messages={messages}
+      />
       <Input
-        sendMessage={(messageObject) => drone.publish(messageObject)}
+        sendMessage={messageObject => drone.publish(messageObject)}
       />
 
       {console.log('Show Member list: ', memberList)}
