@@ -1,6 +1,7 @@
 import React from "react";
+import './Chat.css';
 
-export default function Chat({ messages }) { // destructure props to use sendMessage directly
+export default function Chat({ messages, me }) { // Destructure props
 
     // Convert timestamp into readable hours and minutes
     const convertTimestamp = (timestamp) => {
@@ -12,10 +13,41 @@ export default function Chat({ messages }) { // destructure props to use sendMes
         return convertedTime;
     };
 
+    // Choose side for message, right side is user
+    const msgSide = (clientId) => {
+        if (me.id === clientId)
+            return 'right-msg';
+        else
+            return 'left-msg';
+    };
+
     return (
-        <div>
+        <div className="msger-chat">
             {
-                messages.map(message => <h5 key={message.id}>{convertTimestamp(message.timestamp)} | {message.member.clientData.name}: {message.data}</h5>)
+                messages.map(message =>
+                    <div
+                        className={`msg ${msgSide(message.clientId)}`}
+                        key={message.id}
+                    >
+                        <div
+                            className="msg-bubble"
+                            style={{ background: message.member.clientData.color }}
+                        >
+                            <div className="msg-info">
+                                <div className="msg-info-name">
+                                    {message.member.clientData.name}
+                                </div>
+                                <div className="msg-info-time">
+                                    {convertTimestamp(message.timestamp)}
+                                </div>
+                            </div>
+                            <div className="msg-text">
+                                {message.data}
+                            </div>
+                        </div>
+
+                    </div>
+                )
             }
         </div>
     );

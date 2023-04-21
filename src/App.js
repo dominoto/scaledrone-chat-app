@@ -1,14 +1,15 @@
-// import logo from './logo.svg';
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import Input from './components/Input';
 import Chat from './components/Chat';
+import Header from './components/Header';
 
 export default function App() {
 
   const [drone, setDrone] = useState(null);
   const [memberList, setMemberList] = useState([]);
   const [messages, setMessages] = useState([]);
+  const [me, setMe] = useState([]);
 
   // Generate random name for member
   const randomName = () => {
@@ -72,20 +73,15 @@ export default function App() {
       // Give an array of members when user joins room, one-time
       room.on('members', members => {
         setMemberList(members);
-        // console.log('Show Member list on members one time: ', members);
+        setMe(members.find(member => member.id === drone.clientId)); // Get user
       });
       // Read custom member data
       room.on('member_join', member => {
         setMemberList(members => [...members, member]);
-        // console.log(member.clientData.name);
-        // console.log(member.clientData.color);
-        // console.log('Show Member list on member_join: ', member);
       });
       // Save received messages
       room.on('message', message => {
         setMessages(messages => [...messages, message]);
-        // console.log('Received data:', message.data);
-        // console.log('Messages:', messages);
       });
     };
 
@@ -94,10 +90,10 @@ export default function App() {
 
   return (
     <div className="App">
-      <h1>Welcome to the Chat Room!</h1>
-
+      <Header me={me} />
       <Chat
         messages={messages}
+        me={me}
       />
       <Input
         sendMessage={messageObject => drone.publish(messageObject)}
@@ -105,6 +101,7 @@ export default function App() {
 
       {console.log('Show Member list: ', memberList)}
       {console.log('Show Messages: ', messages)}
+      {console.log('Show Me: ', me)}
     </div>
   );
 }

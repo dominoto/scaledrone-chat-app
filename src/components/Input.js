@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function Input({ sendMessage }) { // destructure props to use sendMessage directly
+export default function Input({ sendMessage }) { // Destructure props to use sendMessage directly
     const [input, setInput] = useState('');
 
     const handleSubmit = (event) => {
@@ -9,6 +9,7 @@ export default function Input({ sendMessage }) { // destructure props to use sen
             room: 'observable-room',
             message: input
         });
+        setInput('');
     };
 
     return (
