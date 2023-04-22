@@ -13,7 +13,7 @@ export default function Input({ sendMessage, me }) {
         message: input,
       });
       setInput("");
-    } else alert("Please write a message before sending.");
+    }
   };
 
   return (

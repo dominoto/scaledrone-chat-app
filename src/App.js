@@ -4,6 +4,7 @@ import Input from "./components/Input";
 import Chat from "./components/Chat";
 import Header from "./components/Header";
 import InfoMessage from "./components/InfoMessage";
+import Footer from "./components/Footer";
 
 export default function App() {
   const [drone, setDrone] = useState(null);
@@ -164,13 +165,14 @@ export default function App() {
 
   return (
     <div className="App">
-      <Header me={me} />
-      <Chat messages={messages} me={me} />
-      <InfoMessage infoMessage={infoMessage} memberList={memberList} />
+      <Header me={me} style={{flex: "0.1"}}/>
+      <Chat messages={messages} me={me} style={{flex: "1"}}/>
+      <InfoMessage infoMessage={infoMessage} memberList={memberList} style={{flex: "0.2"}}/>
       <Input
         sendMessage={(messageObject) => drone.publish(messageObject)}
         me={me}
-      />
+        style={{flex: "0.2"}}/>
+      <Footer style={{flex: "0.1"}}/>
 
       {console.log("Show Member list: ", memberList)}
       {console.log("Show Messages: ", messages)}
