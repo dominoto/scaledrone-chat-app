@@ -79,8 +79,8 @@ export default function App() {
   // Connect to Scaledrone channel
   useEffect(() => {
     const drone = new window.Scaledrone("TLgwQzN5ZDSTtXDV", {
+      // Append user data because of observable room
       data: {
-        // Append user data because of observable room
         name: randomName(),
         color: randomColor(),
       },
@@ -99,27 +99,36 @@ export default function App() {
       });
       drone.on("error", (error) => {
         console.error("Error with connection:", error);
+        setInfoMessage(
+          "Error with connection, try refreshing the page to connect."
+        );
       });
       drone.on("close", (event) => {
         console.log("Connection closed:", event);
+        setInfoMessage("Connection with Scaledrone has been closed.");
       });
       drone.on("disconnect", () => {
         console.log(
           "User has disconnected, Scaledrone will try to reconnect soon"
         );
+        setInfoMessage(
+          "You have been disconnected, Scaledrone will try to reconnect you soon."
+        );
       });
       drone.on("reconnect", () => {
         console.log("User has been reconnected");
+        setInfoMessage("You have been reconnected.");
       });
     };
 
     const roomEvents = () => {
-      // Subscribe to room to listen for messages
+      // Subscribe to observable room to listen for messages
       const room = drone.subscribe("observable-room");
       // Check connection to room
       room.on("open", (error) => {
         if (error) {
           console.error(error);
+          setInfoMessage("Failed to connect you to room.");
         } else {
           console.log("Connected to room");
           setInfoMessage("Connected to room.");

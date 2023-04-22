@@ -1,6 +1,7 @@
 .msger-inputarea {
   display: flex;
   padding: 10px;
+  height: 2vh;
 }
 
 .msger-input {
@@ -8,6 +9,7 @@
   background: white;
   box-shadow: 4px 4px 10px black;
   border-radius: 5px;
+  min-height: 1.5em;
 }
 
 .msger-send {
@@ -16,6 +18,7 @@
   font-weight: bold;
   cursor: pointer;
   min-width:fit-content;
+  min-height: 2em;
   transition: width 1s, height 1s;
   text-shadow: 1px 1px 2px black;
   box-shadow: 4px 4px 10px black;
