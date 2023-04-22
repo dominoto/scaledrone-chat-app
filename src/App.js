@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import Input from "./components/Input";
 import Chat from "./components/Chat";
 import Header from "./components/Header";
+import InfoMessage from "./components/InfoMessage";
 
 export default function App() {
   const [drone, setDrone] = useState(null);
   const [memberList, setMemberList] = useState([]);
   const [messages, setMessages] = useState([]);
   const [me, setMe] = useState([]);
+  const [infoMessage, setInfoMessage] = useState("");
 
   // Generate random name for member
   const randomName = () => {
@@ -120,6 +122,7 @@ export default function App() {
           console.error(error);
         } else {
           console.log("Connected to room");
+          setInfoMessage("Connected to room.");
         }
       });
       // Give an array of members when user joins room, one-time
@@ -127,9 +130,19 @@ export default function App() {
         setMemberList(members);
         setMe(members.find((member) => member.id === drone.clientId)); // Get user
       });
-      // Read custom member data
+      // Read custom member data from joined member
       room.on("member_join", (member) => {
         setMemberList((members) => [...members, member]);
+        setInfoMessage(`Member ${member.clientData.name} joined the room.`);
+      });
+      // Member left the room
+      room.on("member_leave", (leaver) => {
+        setInfoMessage(`Member ${leaver.clientData.name} left the room.`);
+        setMemberList((members) =>
+          members.filter(
+            (member) => member.clientData.name !== leaver.clientData.name
+          )
+        );
       });
       // Save received messages
       room.on("message", (message) => {
@@ -144,6 +157,7 @@ export default function App() {
     <div className="App">
       <Header me={me} />
       <Chat messages={messages} me={me} />
+      <InfoMessage infoMessage={infoMessage} memberList={memberList} />
       <Input
         sendMessage={(messageObject) => drone.publish(messageObject)}
         me={me}
