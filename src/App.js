@@ -89,6 +89,7 @@ export default function App() {
     setDrone(drone);
   }, []);
 
+  // Check for various drone events
   useEffect(() => {
     const droneEvents = () => {
       // Check if connection is open
@@ -96,6 +97,7 @@ export default function App() {
         if (error) {
           return console.error(error);
         }
+        // If drone connection is opened, start checking room events
         roomEvents();
       });
       drone.on("error", (error) => {
@@ -122,6 +124,7 @@ export default function App() {
       });
     };
 
+    // Check for various room events
     const roomEvents = () => {
       // Subscribe to observable room to listen for messages
       const room = drone.subscribe("observable-room");
@@ -135,7 +138,7 @@ export default function App() {
           setInfoMessage("Connected to room.");
         }
       });
-      // Give an array of members when user joins room, one-time
+      // Give an array of online members when user joins room, one-time
       room.on("members", (members) => {
         setMemberList(members);
         setMe(members.find((member) => member.id === drone.clientId)); // Get user
@@ -160,23 +163,22 @@ export default function App() {
       });
     };
 
+    // If drone channel connection is established, start checking drone events
     if (drone) droneEvents();
   }, [drone, messages, memberList]);
 
   return (
     <div className="App">
-      <Header me={me} style={{flex: "0.1"}}/>
-      <Chat messages={messages} me={me} style={{flex: "1"}}/>
-      <InfoMessage infoMessage={infoMessage} memberList={memberList} style={{flex: "0.2"}}/>
-      <Input
-        sendMessage={(messageObject) => drone.publish(messageObject)}
-        me={me}
-        style={{flex: "0.2"}}/>
-      <Footer style={{flex: "0.1"}}/>
-
-      {console.log("Show Member list: ", memberList)}
-      {console.log("Show Messages: ", messages)}
-      {console.log("Show Me: ", me)}
+      <Header me={me} />
+      <Chat messages={messages} me={me} />
+      <div className="inputInfo">
+        <InfoMessage infoMessage={infoMessage} memberList={memberList} />
+        <Input
+          sendMessage={(messageObject) => drone.publish(messageObject)}
+          me={me}
+        />
+        <Footer />
+      </div>
     </div>
   );
 }

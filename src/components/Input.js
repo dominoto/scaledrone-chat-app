@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./Input.css";
 
+// Destructure props
 export default function Input({ sendMessage, me }) {
-  // Destructure props to use sendMessage directly
   const [input, setInput] = useState("");
 
+  // On clicking send, send the message (if not empty) and reset input field
   const handleSubmit = (event) => {
     event.preventDefault();
     if (input !== "") {
@@ -17,17 +18,17 @@ export default function Input({ sendMessage, me }) {
   };
 
   return (
-    <form className="msger-inputarea" onSubmit={handleSubmit}>
+    <form className="inputBox" onSubmit={handleSubmit}>
       <input
         type="text"
         value={input}
         placeholder="Input your message and click SEND or press ENTER..."
         onChange={(event) => setInput(event.target.value)}
-        className="msger-input"
+        className="input"
       />
       <button
         type="submit"
-        className="msger-send"
+        className="send"
         style={
           me.length !== 0
             ? { background: me.clientData.color }

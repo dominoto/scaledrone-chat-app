@@ -1,49 +1,51 @@
-.msger-chat {
-  /* flex: 1; */
+.chat {
   overflow-y: auto;
   padding: 10px;
-  height: 74vh;
 }
 
-.msg {
+.message {
   display: flex;
   align-items: flex-end;
   margin-bottom: 10px;
 }
 
-.msg-bubble {
-  max-width: 450px;
-  padding: 15px;
-  border-radius: 15px;
+.bubble {
+  max-width: 500px;
+  padding: 12px;
+  border-radius: 20px;
   color: white;
   text-shadow: 1px 1px 2px black;
   box-shadow: 4px 4px 10px black;
 }
 
-.msg-info {
+.bubbleInfo {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
 }
 
-.msg-info-name {
+.bubbleInfoName {
   margin-right: 10px;
   font-weight: bold;
 }
 
-.msg-info-time {
-  font-size: 0.85em;
+.bubbleInfoTime {
+  font-size: 0.8em;
 }
 
-.left-msg .msg-bubble {
+.bubbleText {
+  overflow-wrap: break-word;
+}
+
+.left .bubble {
   border-bottom-left-radius: 0;
 }
 
-.right-msg {
+.right {
   flex-direction: row-reverse;
 }
 
-.right-msg .msg-bubble {
+.right .bubble {
   border-bottom-right-radius: 0;
 }

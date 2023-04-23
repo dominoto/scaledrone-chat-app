@@ -1,12 +1,12 @@
 import React from "react";
 import "./Chat.css";
 
+// Destructure props
 export default function Chat({ messages, me }) {
-  // Destructure props
-
   // Convert timestamp into readable hours and minutes
   const convertTimestamp = (timestamp) => {
-    const date = new Date(timestamp * 1000); // Convert from seconds to miliseconds
+    // Convert from seconds to miliseconds
+    const date = new Date(timestamp * 1000);
     const convertedTime = new Intl.DateTimeFormat("hr-HR", {
       hour: "numeric",
       minute: "numeric",
@@ -16,27 +16,30 @@ export default function Chat({ messages, me }) {
 
   // Choose side for message, right side is user
   const msgSide = (clientId) => {
-    if (me.id === clientId) return "right-msg";
-    else return "left-msg";
+    if (me.id === clientId) return "right";
+    else return "left";
   };
 
   return (
-    <div className="msger-chat">
+    <div className="chat">
       {messages.map((message) => (
-        <div className={`msg ${msgSide(message.clientId)}`} key={message.id}>
+        <div
+          className={`message ${msgSide(message.clientId)}`}
+          key={message.id}
+        >
           <div
-            className="msg-bubble"
+            className="bubble"
             style={{ background: message.member.clientData.color }}
           >
-            <div className="msg-info">
-              <div className="msg-info-name">
+            <div className="bubbleInfo">
+              <div className="bubbleInfoName">
                 {message.member.clientData.name}
               </div>
-              <div className="msg-info-time">
+              <div className="bubbleInfoTime">
                 {convertTimestamp(message.timestamp)}
               </div>
             </div>
-            <div className="msg-text">{message.data}</div>
+            <div className="bubbleText">{message.data}</div>
           </div>
         </div>
       ))}

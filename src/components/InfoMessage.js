@@ -1,10 +1,16 @@
 import React from "react";
-import "./InfoMessage.css";
 
 // Destructure props
 export default function Input({ infoMessage, memberList }) {
   return (
-    <div className="infoMessage">
+    <div
+      className="infoMessage"
+      style={{
+        paddingLeft: "1vw",
+        color: "lightgray",
+        textShadow: "1px 1px 2px black",
+      }}
+    >
       <div>{infoMessage}</div>
       <div>
         Members online:{" "}

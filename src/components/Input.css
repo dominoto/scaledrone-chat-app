@@ -1,10 +1,9 @@
-.msger-inputarea {
+.inputBox {
   display: flex;
   padding: 10px;
-  height: 2vh;
 }
 
-.msger-input {
+.input {
   flex: 1;
   background: white;
   box-shadow: 4px 4px 10px black;
@@ -12,19 +11,22 @@
   min-height: 1.5em;
 }
 
-.msger-send {
+.send {
   margin-left: 10px;
   color: white;
   font-weight: bold;
   cursor: pointer;
-  min-width:fit-content;
+  min-width: fit-content;
   min-height: 2em;
-  transition: width 1s, height 1s;
+  width: 2em;
+  height: 2em;
+  transition: width 0.5s, height 0.5s;
   text-shadow: 1px 1px 2px black;
   box-shadow: 4px 4px 10px black;
   border-radius: 5px;
 }
 
-.msger-send:hover {
-  width: 10vw;
+.send:hover {
+  width: 5vw;
+  height: 3vw;
 }

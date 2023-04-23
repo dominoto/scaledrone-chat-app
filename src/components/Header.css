@@ -2,7 +2,7 @@
   color: white;
   text-shadow: 2px 2px black;
   text-align: center;
-  height: 10vh;
+  box-shadow: 4px 4px 10px black;
 }
 
 .name {

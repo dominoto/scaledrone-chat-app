@@ -1,5 +1,4 @@
 import React from "react";
-import "./Footer.css";
 
 export default function Footer() {
   return (
@@ -9,7 +8,6 @@ export default function Footer() {
         color: "white",
         textShadow: "2px 2px black",
         textAlign: "center",
-        height: "2vh",
         marginBottom: "1vh",
       }}
     >
