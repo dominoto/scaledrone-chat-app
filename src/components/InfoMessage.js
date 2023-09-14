@@ -16,7 +16,10 @@ export default function Input({ infoMessage, memberList }) {
         Members online:{" "}
         {memberList.length !== 0
           ? memberList.map((member) => (
-              <span style={{ color: member.clientData.color }}>
+              <span
+                style={{ color: member.clientData.color }}
+                key={member.clientData.name}
+              >
                 {member.clientData.name},{" "}
               </span>
             ))
