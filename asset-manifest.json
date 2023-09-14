@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/scaledrone-chat-app/static/css/main.93fd7a7b.css",
+    "main.js": "/scaledrone-chat-app/static/js/main.51cb079d.js",
+    "static/js/787.d7da2f47.chunk.js": "/scaledrone-chat-app/static/js/787.d7da2f47.chunk.js",
+    "index.html": "/scaledrone-chat-app/index.html",
+    "main.93fd7a7b.css.map": "/scaledrone-chat-app/static/css/main.93fd7a7b.css.map",
+    "main.51cb079d.js.map": "/scaledrone-chat-app/static/js/main.51cb079d.js.map",
+    "787.d7da2f47.chunk.js.map": "/scaledrone-chat-app/static/js/787.d7da2f47.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.93fd7a7b.css",
+    "static/js/main.51cb079d.js"
+  ]
+}
