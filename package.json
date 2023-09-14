@@ -1,6 +1,6 @@
 {
-  "homepage": "http://dominoto.github.io/fe-seminar",
-  "name": "fe-seminar",
+  "homepage": "http://dominoto.github.io/scaledrone-chat-app",
+  "name": "scaledrone-chat-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
