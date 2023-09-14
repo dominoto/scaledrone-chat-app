@@ -6,75 +6,12 @@ import Header from "./components/Header";
 import InfoMessage from "./components/InfoMessage";
 import Footer from "./components/Footer";
 import { useConnect } from "./hooks/useConnect";
+
 export default function App() {
   const [memberList, setMemberList] = useState([]);
   const [messages, setMessages] = useState([]);
   const [me, setMe] = useState([]);
   const [infoMessage, setInfoMessage] = useState("");
-
-  // Generate random name for member
-  const randomName = () => {
-    const adjectives = [
-      "attractive",
-      "bald",
-      "beautiful",
-      "chubby",
-      "clean",
-      "dazzling",
-      "drab",
-      "elegant",
-      "fancy",
-      "fit",
-      "flabby",
-      "glamorous",
-      "gorgeous",
-      "handsome",
-      "long",
-      "magnificent",
-      "muscular",
-      "plain",
-      "plump",
-      "quaint",
-      "scruffy",
-      "shapely",
-      "short",
-      "skinny",
-      "stocky",
-      "flying",
-      "big",
-      "tall",
-    ];
-    const nouns = [
-      "marten",
-      "mandrill",
-      "tapir",
-      "dromedary",
-      "crab",
-      "tiger",
-      "canary",
-      "chimpanzee",
-      "civet",
-      "dormouse",
-      "chipmunk",
-      "cougar",
-      "parrot",
-      "bighorn",
-      "ox",
-      "coati",
-      "monkey",
-      "raccoon",
-      "dog",
-      "kangaroo",
-    ];
-    const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-    const noun = nouns[Math.floor(Math.random() * nouns.length)];
-    return adjective + " " + noun;
-  };
-
-  // Generate random color for member
-  const randomColor = () => {
-    return "#" + Math.floor(Math.random() * 0xffffff).toString(16);
-  };
 
   // Connect to Scaledrone channel
   const channelId = "TLgwQzN5ZDSTtXDV";
